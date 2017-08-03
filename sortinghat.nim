@@ -27,7 +27,7 @@ proc move(hash: string, dir: string, name: string) =
   echo "torrent=$1 ignored" % [name]
 
 proc move(name : string) =
-  move("", name.splitFile().dir, name.splitFile().name)
+  move("", name.splitFile().dir, name.extractFilename())
 
 var
   hash, dir, name: string
