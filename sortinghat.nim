@@ -18,10 +18,11 @@ proc move(hash: string, dir: string, name: string) =
               args = ["--torrent", hash, "--remove"]
             ).waitForExit()
         echo "try to move $1/$2 to $3/$4" % [dir, name, row[1], name]
-        moveFile(
-          "$1/$2" % [dir, name],
-          "$1/$2" % [row[1], name]
-        )
+        discard
+          startProcess(
+              command = "mv",
+              args = ["$1/$2" % [dir, name], "$1/$2" % [row[1], name]]
+            ).waitForExit()
         echo "moved $1/$2 to $3/$4" % [dir, name, row[1], name]
         return
   echo "torrent=$1 ignored" % [name]
