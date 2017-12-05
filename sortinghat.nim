@@ -23,15 +23,14 @@ proc move(hash: string, dir: string, name: string) =
     echo "torrent=$1 ignored" % [name]
 
 if isMainModule:
-  var hash, dir, name: string
-  dir = os.getEnv("TR_TORRENT_DIR")
-  name = os.getEnv("TR_TORRENT_NAME")
-  hash = os.getEnv("TR_TORRENT_HASH")
-  if name == "" and hash == "" and paramCount() == 0:
-    echo "Usage: sortinghat <name>"
-  else:
-    var file : string = paramStr(1)
-    dir = file.splitFile().dir
-    name = file.extractFilename()
+  var
+    hash : string = os.getEnv("TR_TORRENT_HASH")
+    name : string = os.getEnv("TR_TORRENT_NAME")
+    dir  : string = os.getEnv("TR_TORRENT_DIR")
+  if name == "" or hash == "":
     move(hash, dir, name)
-    
+  elif paramCount() > 0:
+    var file : string = paramStr(1)
+    move("", file.splitFile().dir, file.extractFilename())
+  else:
+    echo "Usage: sortinghat <name>"
