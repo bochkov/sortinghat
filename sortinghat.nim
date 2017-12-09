@@ -27,7 +27,7 @@ if isMainModule:
     hash : string = os.getEnv("TR_TORRENT_HASH")
     name : string = os.getEnv("TR_TORRENT_NAME")
     dir  : string = os.getEnv("TR_TORRENT_DIR")
-  if name == "" or hash == "":
+  if hash != "" and name != "" and dir != "":
     move(hash, dir, name)
   elif paramCount() > 0:
     var file : string = paramStr(1)
