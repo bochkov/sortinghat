@@ -58,18 +58,21 @@ method move(this : Target, target : string = "") =
         break
 
 proc eval(this : Source) : string =
-  var
-    hash : string = getEnv("TR_TORRENT_HASH")
-    name : string = getEnv("TR_TORRENT_NAME")
-    dir  : string = getEnv("TR_TORRENT_DIR")
-  if hash == "" and paramCount() > 0:
+  var hash, name, dir : string = ""
+  if paramCount() == 0:
+    hash = getEnv("TR_TORRENT_HASH")
+    name = getEnv("TR_TORRENT_NAME")
+    dir  = getEnv("TR_TORRENT_DIR")
+  else:
     name = paramStr(1).extractFilename()
     dir = paramStr(1).splitFile().dir
-  else:
+    if dir == "" or dir == ".":
+      dir = getAppDir()
+
+  if hash == "" or name == "":
     echo "Usage: sortinghat <name>"
     raise newException(OSError, "params not defined")
-  if dir == "" or dir == ".":
-    dir = getAppDir()
+  
   return "$1/$2" % [dir, name]
 
 if isMainModule:
