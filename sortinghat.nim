@@ -39,6 +39,9 @@ proc toKV(row : Row) : tuple[key : string, dir : string] =
   else:
     raise newException(OSError, "Cannot get key-value")
 
+method src(this : Move) : string {.base.} =
+  return this.source
+
 method move(this : Move, target : string) {.base.} =
   echo "try to move $1 to $2" % [this.source, target]
   discard execCmd("mv $1 $2" % [this.source, target])
@@ -54,7 +57,7 @@ method move(this : Target, target : string = "") =
     var row : Row
     for line in settings.split("\n"):
       row = newRow(line)
-      if not row.isEmpty() and row.match(this.origin.source):
+      if not row.isEmpty() and row.match(this.origin.src()):
         this.origin.move(row.toKV().dir)
         break
 
