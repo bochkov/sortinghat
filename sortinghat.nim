@@ -1,5 +1,6 @@
 import os
 import osproc
+import ospaths
 import strutils
 
 type
@@ -29,7 +30,7 @@ proc isEmpty(row : Row) : bool =
 
 proc match(row : Row, source : string) : bool = 
   var elems : seq[string] = row.line.split("=")
-  return elems.len > 1 and source.startsWith(elems[0])
+  return elems.len > 1 and source.splitFile().name.startsWith(elems[0])
 
 proc toKV(row : Row) : tuple[key : string, dir : string] =
   var elems : seq[string] = row.line.split("=")
@@ -69,7 +70,7 @@ proc eval(this : Source) : string =
     if dir == "" or dir == ".":
       dir = getAppDir()
 
-  if hash == "" or name == "":
+  if hash == "" and name == "":
     echo "Usage: sortinghat <name>"
     raise newException(OSError, "params not defined")
   
