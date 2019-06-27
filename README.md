@@ -7,5 +7,5 @@ Can be used in 'script-torrent-done-filename' in Transmission.
 ## Compile
 Simple run
 ```
-nim c -d:release --out=/some/dir/sortinghat app/sortinghat.nim
+nim c -d:release --out=/some/dir/sortinghat app.nim
 ```
