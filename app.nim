@@ -18,7 +18,6 @@ proc stopTransmission(hash: string) =
     discard execCmd("transmission-remote --torrent $1 --remove" % hash)
 
 proc mv(source, target: string) =
-  echo "try to move $1 to $2" % [source, target]
   discard execCmd("mv $1 $2" % [source, target])
   echo "moved $1 to $2" % [source, target]
 
@@ -41,6 +40,7 @@ if isMainModule:
   stopTransmission(hash)
     
   var target: string = getTarget(name)
+  echo "$1 => $2" % [name, target]
   if target != "":
     var source: string = "$1/$2" % [dir, name]
     source.mv(target)
