@@ -9,7 +9,7 @@ proc getTarget(source: string) : string =
   var settings : string = readFile("$1/$2" % [getAppDir(), SETTINGS_FILE])
   for line in settings.split("\n"):
     var elems: seq[string] = line.split("=")
-    if source.startsWith(line):
+    if source.startsWith(elems[0]):
       return elems[1]
   return ""
 
