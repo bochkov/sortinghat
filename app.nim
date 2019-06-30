@@ -11,8 +11,7 @@ proc getTarget(source: string) : string =
     var elems: seq[string] = line.split("=")
     if line.startsWith(source):
       return elems[1]
-    else:
-      return ""
+  return ""
 
 proc stopTransmission(hash: string) =
   if hash != "":
@@ -38,9 +37,10 @@ if isMainModule:
   if hash == "" and name == "":
     echo "Usage: sortinghat <name>"
     quit(1)
+
+  stopTransmission(hash)
     
   var target: string = getTarget(name)
   if target != "":
-    stopTransmission(hash)
     var source: string = "$1/$2" % [dir, name]
     source.mv(target)
