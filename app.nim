@@ -37,10 +37,9 @@ if isMainModule:
     echo "Usage: sortinghat <name>"
     quit(1)
 
-  stopTransmission(hash)
-    
   var target: string = getTarget(name)
-  echo "$1 => $2" % [name, target]
   if target != "":
+    echo "$1 => $2" % [name, target]
+    stopTransmission(hash)
     var source: string = "$1/$2" % [dir, name]
     source.mv(target)
